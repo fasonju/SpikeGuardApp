@@ -5,8 +5,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MapSample extends StatefulWidget {
-  const MapSample({
+  Set<Marker> markers;
+  Set<Polygon> polygons;
+
+  MapSample({
     super.key,
+    required this.markers,
+    required this.polygons
   });
 
   @override
@@ -30,10 +35,13 @@ class MapSampleState extends State<MapSample> {
       if (snapshot.hasData) {
         return GoogleMap(
         initialCameraPosition: CameraPosition(target: LatLng(snapshot.data!.latitude,
-    snapshot.data!.longitude), zoom: 14.4746),
-    onMapCreated: (GoogleMapController controller) {
+          snapshot.data!.longitude), zoom: 14.4746),
+          onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
-        });
+        },
+        myLocationEnabled: true,
+        markers: widget.markers,
+        polygons: widget.polygons,);
       } else {
         return const Center(child: CircularProgressIndicator());
       }
