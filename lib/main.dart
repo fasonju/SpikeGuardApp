@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'home.dart';
 
 void main() {
+  if (dotenv.env['ENV'] == 'development') {
+    dotenv.load(fileName: '.env');
+  } else {
+    print('Using production environment');
+  }
+
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
