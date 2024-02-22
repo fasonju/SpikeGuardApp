@@ -6,12 +6,10 @@ import 'package:geolocator/geolocator.dart';
 
 class MapSample extends StatefulWidget {
   Set<Marker> markers;
-  Set<Polygon> polygons;
 
   MapSample({
     super.key,
     required this.markers,
-    required this.polygons
   });
 
   @override
@@ -40,8 +38,7 @@ class MapSampleState extends State<MapSample> {
           _controller.complete(controller);
         },
         myLocationEnabled: true,
-        markers: widget.markers,
-        polygons: widget.polygons,);
+        markers: widget.markers,);
       } else {
         return const Center(child: CircularProgressIndicator());
       }

@@ -42,6 +42,8 @@ dependencies:
   # geolocator:
   geolocator: ^11.0.0
 
+  #http:
+  http: ^1.2.0
 
 
 dev_dependencies:

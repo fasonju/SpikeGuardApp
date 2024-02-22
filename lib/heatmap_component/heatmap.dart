@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:prototype_app/heatmap_component/google_maps.dart';
+import 'package:http/http.dart' as http;
+import 'package:prototype_app/heatmap_component/utils.dart';
 
 class HeatmapPage extends StatelessWidget {
   const HeatmapPage({super.key});
@@ -13,25 +17,33 @@ class HeatmapPage extends StatelessWidget {
         title: const Text('Heatmap'),
       ),
       body: Center(
-          child: MapSample(
-            markers: {
-              Marker(markerId: MarkerId("1"), position: LatLng(51.44723174143103, 5.488294511188016)),
-            },
-            polygons: {
-              Polygon(
-                polygonId: PolygonId("1"),
-                points: [
-                  LatLng(51.44723174143103, 5.498294511188016),
-                  LatLng(51.45723174143103, 5.488294511128016),
-                  LatLng(51.44723174143103, 5.488294511188016),
-                ],
-                strokeWidth: 2,
-                strokeColor: Colors.red,
-                fillColor: Colors.red.withOpacity(0.5),
-              ),
-            }
-          ),
-      ),
+          child: FutureBuilder<Set<Marker>>(
+              future: _getMarkers(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<Set<Marker>> snapshot) {
+                if (snapshot.hasData) {
+                  return MapSample(markers: snapshot.data!);
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              })),
     );
+  }
+
+  Future<Set<Marker>> _getMarkers() async {
+    Uri url = Uri.https("spike-guard-api-b1a3e4dd2495.herokuapp.com","/markers");
+    print(url);
+    final response = await http.get(url);
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 501) {
+      try {
+        return MarkersParser.parseMarkers(response.body);
+      } catch (e) {
+        throw Exception('Failed to parse markers');
+      }
+    } else {
+      throw Exception('Failed to load markers');
+    }
   }
 }
