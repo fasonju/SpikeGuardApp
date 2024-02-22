@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:prototype_app/heatmap_component/google_maps.dart';
 import 'package:http/http.dart' as http;
@@ -31,12 +32,19 @@ class HeatmapPage extends StatelessWidget {
   }
 
   Future<Set<Marker>> _getMarkers() async {
-    Uri url = Uri.https("spike-guard-api-b1a3e4dd2495.herokuapp.com","/markers");
-    print(url);
+
+    Uri url;
+    if (const String.fromEnvironment("ENV") == "development") {
+      url = Uri.http(dotenv.get("API_URL"), "/markers");
+    } else {
+      url = Uri.https(const String.fromEnvironment("API_URL"),"/markers");
+    }
+
+
     final response = await http.get(url);
     print(response.statusCode);
     print(response.body);
-    if (response.statusCode == 501) {
+    if (response.statusCode == 200) {
       try {
         return MarkersParser.parseMarkers(response.body);
       } catch (e) {

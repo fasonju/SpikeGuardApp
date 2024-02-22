@@ -23,6 +23,7 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.markers);
     return Scaffold(
       body: _loadGoogleMap(),
     );

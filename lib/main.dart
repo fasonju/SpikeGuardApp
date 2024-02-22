@@ -4,8 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'home.dart';
 
 void main() {
-  if (dotenv.env['ENV'] == 'development') {
-    dotenv.load(fileName: '.env');
+  if (const String.fromEnvironment("ENV") == "development") {
+    dotenv.load(fileName: '.env').then((value) => print('Loaded ${dotenv.env['API_URL']}'));
   } else {
     print('Using production environment');
   }
