@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ReportPage()),
+                          MaterialPageRoute(builder: (context) => EmergencyInformationPage()),
                         );
                       },
                       child: Text("Set up quick report"),
