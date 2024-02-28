@@ -42,8 +42,6 @@ class HeatmapPage extends StatelessWidget {
 
 
     final response = await http.get(url);
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == 200) {
       try {
         return MarkersParser.parseMarkers(response.body);
