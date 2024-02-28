@@ -29,7 +29,7 @@ class EmergencyInformationPage extends StatelessWidget {
 class EmergencyInformationForm extends StatefulWidget {
   final SharedPreferences sharedPreferences;
 
-  EmergencyInformationForm(this.sharedPreferences, {super.key});
+  const EmergencyInformationForm(this.sharedPreferences, {super.key});
 
   @override
   State<EmergencyInformationForm> createState() => _EmergencyInformationFormState();
