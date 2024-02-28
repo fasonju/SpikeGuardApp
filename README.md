@@ -16,3 +16,9 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 add .env containing api endpoint
+
+Make sure to add the API_URL env variable in prod and include in flutter build by running
+```bash
+flutter build apk --dart-define=API_URL={your api url}
+```
+```
