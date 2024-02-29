@@ -41,21 +41,43 @@ class _EmergencyInformationFormState extends State<EmergencyInformationForm> {
   late TextEditingController phoneController;
   late TextEditingController addressController;
   late TextEditingController emergencyContactPhoneController;
+  late TextEditingController lastNameController;
+  late TextEditingController cityController;
+  late TextEditingController countryController;
+
 
   @override
   Widget build(BuildContext context) {
     nameController = TextEditingController(text: getCachedValue("name"));
+    lastNameController = TextEditingController(text: getCachedValue("last_name"));
     phoneController = TextEditingController(text: getCachedValue("phone"));
+    cityController = TextEditingController(text: getCachedValue("city"));
+    countryController = TextEditingController(text: getCachedValue("country"));
     addressController = TextEditingController(text: getCachedValue("address"));
     emergencyContactPhoneController = TextEditingController(text: getCachedValue("emergency_contact_phone"));
 
     return Column(
       children: [
-        TextFormField(
-          decoration: const InputDecoration(
-            labelText: 'Name',
-          ),
-          controller: nameController,
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'First name',
+                ),
+                controller: nameController,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Last name',
+                ),
+                controller: lastNameController,
+              ),
+            ),
+          ],
         ),
         TextFormField(
           decoration: const InputDecoration(
@@ -63,12 +85,34 @@ class _EmergencyInformationFormState extends State<EmergencyInformationForm> {
           ),
           controller: phoneController,
         ),
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Country',
+                ),
+                controller: countryController,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'City',
+                ),
+                controller: cityController,
+              ),
+            ),
+          ],
+        ),
         TextFormField(
           decoration: const InputDecoration(
             labelText: 'Address',
           ),
           controller: addressController,
         ),
+
         TextFormField(
           decoration: const InputDecoration(
             labelText: 'Emergency contact phone',
@@ -95,6 +139,9 @@ class _EmergencyInformationFormState extends State<EmergencyInformationForm> {
 
   cacheFormValues() {
     saveValue("name", nameController.text);
+    saveValue("last_name", lastNameController.text);
+    saveValue("city", cityController.text);
+    saveValue("country", countryController.text);
     saveValue("phone", phoneController.text);
     saveValue("address", addressController.text);
     saveValue("emergency_contact_phone", emergencyContactPhoneController.text);

@@ -19,6 +19,6 @@ add .env containing api endpoint
 
 Make sure to add the API_URL env variable in prod and include in flutter build by running
 ```bash
-flutter build apk --dart-define=API_URL={your api url}
+flutter build apk --dart-define=API_URL={your api url} --dart-define=ENV=prod
 ```
 ```
