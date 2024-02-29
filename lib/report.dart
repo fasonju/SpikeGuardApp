@@ -138,6 +138,30 @@ class _EmergencyInformationFormState extends State<EmergencyInformationForm> {
   }
 
   cacheFormValues() {
+    if (nameController.text.isEmpty ||
+        lastNameController.text.isEmpty ||
+        phoneController.text.isEmpty ||
+        cityController.text.isEmpty ||
+        countryController.text.isEmpty ||
+        addressController.text.isEmpty ||
+        emergencyContactPhoneController.text.isEmpty) {
+      showDialog(context: context, builder: (BuildContext context) {
+        return  AlertDialog(
+          title: const Text('Error'),
+          content: const Text('All fields are required'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      });
+      return;
+    }
+
     saveValue("name", nameController.text);
     saveValue("last_name", lastNameController.text);
     saveValue("city", cityController.text);
