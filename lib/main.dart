@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'home.dart';
 
 void main() {
+
   if (const String.fromEnvironment("ENV") == "dev") {
     dotenv.load(fileName: '.env').then((value) => print('Loaded ${dotenv.env['API_URL']}'));
   } else {

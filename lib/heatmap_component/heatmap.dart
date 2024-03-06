@@ -33,9 +33,9 @@ class HeatmapPage extends StatelessWidget {
 
   Future<Set<Marker>> _getMarkers() async {
 
-    Uri url;
-    if (const String.fromEnvironment("ENV") == "development") {
-      url = Uri.http(dotenv.get("API_URL"), "/markers");
+      Uri url;
+      if (const String.fromEnvironment("ENV") == "dev") {
+        url = Uri.http(dotenv.get("API_URL"), "/markers");
     } else {
       url = Uri.https(const String.fromEnvironment("API_URL"),"/markers");
     }

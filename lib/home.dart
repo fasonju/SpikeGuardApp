@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prototype_app/DeviceInfo.dart';
 import 'package:prototype_app/heatmap_component/heatmap.dart';
 import 'package:prototype_app/information.dart';
 import 'package:prototype_app/report.dart';
@@ -67,7 +68,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          Image.network("https://support.entuity.com/hc/article_attachments/360008054038/device_status_dashlet.png")
+          const Expanded(child: Center(child: DeviceStatus()))
         ],
       ),
     );
