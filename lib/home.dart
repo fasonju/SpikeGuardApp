@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prototype_app/DeviceInfo.dart';
+import 'package:prototype_app/DeviceSelector.dart';
 import 'package:prototype_app/heatmap_component/heatmap.dart';
 import 'package:prototype_app/information.dart';
 import 'package:prototype_app/report.dart';
 
+import 'BluetoothHandler.dart';
+
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  final BlueToothHandler guardHandler = BlueToothHandler();
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +71,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          const Expanded(child: Center(child: DeviceStatus()))
+          Expanded(child: Center(child: DeviceStatus(guardHandler: BlueToothHandler())))
         ],
       ),
     );
