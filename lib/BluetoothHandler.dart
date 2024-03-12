@@ -42,15 +42,18 @@ class BlueToothHandler {
 
   void handleCharacteristiscs() {
     batteryStatusStream.listen((event) {
-      print("Battery status: $event");
+      String converted = String.fromCharCodes(event);
+      print("Battery status: $converted");
     });
     spikingStream.listen((event) {
-      print("Spiking status: $event");
+      String converted = String.fromCharCodes(event);
+      print("Spiking status: $converted");
     });
   }
 
   void subscribeCharacteristics(List<Service> services) {
     for (Service service in services) {
+      print(service);
       if (serviceId == service.id) {
         for (Characteristic characteristic in service.characteristics) {
           subscribeIfUsedCharacteristic(characteristic);

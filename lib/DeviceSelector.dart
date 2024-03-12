@@ -77,7 +77,7 @@ class _DeviceStatusState extends State<DeviceStatus> {
         break;
       }
     }
-    if (unique && newDevice.name == "SpikeGuard") {
+    if (unique && newDevice.name == "SPIKEGUARD") {
       discoveredDevices.add(newDevice);
     }
   }
