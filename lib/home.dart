@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prototype_app/DeviceDataSingleton.dart';
@@ -14,7 +16,22 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late StreamSubscription<bool> spikingStream;
+    spikingStream = DeviceDataSingleton.getInstance().isSpikingStream.stream.listen((isSpiking) {
+      checkSpiking(isSpiking, spikingStream, context);
+    });
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          DeviceDataSingleton.getInstance().isSpikingStream = StreamController<bool>.broadcast();
+          DeviceDataSingleton.getInstance().batteryStatusStream = StreamController<int>.broadcast();
+          DeviceDataSingleton.getInstance().faultyDevice = false;
+          spikingStream = DeviceDataSingleton.getInstance().isSpikingStream.stream.listen((isSpiking) {
+            checkSpiking(isSpiking, spikingStream, context);
+          });
+        },
+        child: const Icon(Icons.reset_tv),
+      ),
       appBar: AppBar(
         title: const Text('SpikeGuard'),
         actions: [
@@ -72,6 +89,15 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
+          StreamBuilder(stream: DeviceDataSingleton.getInstance().batteryStatusStream.stream, builder:
+            (BuildContext context, AsyncSnapshot<int> snapshot) {
+              if (snapshot.hasData) {
+                return Text("Battery ${snapshot.data}%");
+              } else {
+                return const Text("Device not yet connected");
+              }
+            }
+          ),
           Expanded(child:
               // Text("Battery ${DeviceDataSingleton.getInstance().batteryStatus}%"),
               // Text("Spiking ${DeviceDataSingleton.getInstance().isSpiking}"),
@@ -81,4 +107,33 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+void checkSpiking(bool isSpiking, StreamSubscription<bool> spikingStream, BuildContext context) {
+  if (isSpiking) {
+    spikingStream.pause();
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Warning'),
+        content: const Text('Spiking detected'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              print("Reporting");
+            },
+            child: const Text('Report'),
+          ),
+          TextButton(
+            onPressed: () {
+              DeviceDataSingleton.getInstance().faultyDevice = true;
+              Navigator.of(context).pop();
+            },
+            child: const Text('False alarm'),
+          ),
+        ],
+      ),
+    );
+  }
+
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -73,17 +74,21 @@ class BlueToothHandler {
 }
 
 void handleCharacteristics(Stream<List<int>> batteryStatusStream) {
-  print("handling characteristics");
   batteryStatusStream.listen((event) {
-    print(event);
+    if (DeviceDataSingleton.getInstance().faultyDevice) {
+      return;
+    }
     String converted = String.fromCharCodes(event);
     List<String> values = converted.split(',');
+    DeviceDataSingleton.getInstance().isSpiking = values[1] == "1";
+    DeviceDataSingleton.getInstance()
+        .batteryStatusStream
+        .add(int.parse(values[0]));
+    DeviceDataSingleton.getInstance().isSpikingStream.add(values[1] == "1");
     print("values");
     print(values);
-    DeviceDataSingleton.getInstance().batteryStatus = int.parse(values[0]);
-    print(DeviceDataSingleton.getInstance().isSpiking);
-    if (DeviceDataSingleton.getInstance().isSpiking) {
+    if (values[1] == "1") {
           Vibration.vibrate(duration: 1000, amplitude: 255);
         }
-      });
+    });
 }
