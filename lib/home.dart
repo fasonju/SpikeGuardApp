@@ -72,13 +72,11 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(child: Column(
-            children: [
-              Text("Battery ${DeviceDataSingleton.getInstance().batteryStatus}%"),
-              Text("Spiking ${DeviceDataSingleton.getInstance().isSpiking}"),
+          Expanded(child:
+              // Text("Battery ${DeviceDataSingleton.getInstance().batteryStatus}%"),
+              // Text("Spiking ${DeviceDataSingleton.getInstance().isSpiking}"),
               DeviceStatus(guardHandler: guardHandler),
-            ])
-          )
+          ),
         ],
       ),
     );

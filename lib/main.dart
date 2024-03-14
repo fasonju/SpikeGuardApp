@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -14,6 +16,7 @@ void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {

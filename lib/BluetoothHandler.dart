@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:prototype_app/DeviceDataSingleton.dart';
@@ -13,7 +14,7 @@ class BlueToothHandler {
   final batteryCharacteristicId =
       Uuid.parse("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
   Stream<List<int>> batteryStatusStream = Stream.empty();
-  Stream<List<int>> spikingStream = Stream.empty();
+  int batteryStatus = 0;
 
   void askPermissions() async {
     await Permission.location.request();
@@ -21,10 +22,12 @@ class BlueToothHandler {
   }
 
   void scanForDevices() {
+    print("scanning");
     deviceStream = flutterReactiveBle.scanForDevices(withServices: []);
   }
 
   void connectToDevice(DiscoveredDevice device) async {
+    FlutterIsolate.killAll();
     connection?.cancel();
     if (device.connectable != Connectable.available) {
       throw Exception("Device is not connectable");
@@ -37,16 +40,7 @@ class BlueToothHandler {
     List<Service> services =
         await flutterReactiveBle.getDiscoveredServices(device.id);
     subscribeCharacteristics(services);
-    handleCharacteristics();
-  }
-
-  void handleCharacteristics() {
-    batteryStatusStream.listen((event) {
-      String converted = String.fromCharCodes(event);
-      List<String> values = converted.split(',');
-      DeviceDataSingleton.getInstance().batteryStatus = int.parse(values[0]);
-      DeviceDataSingleton.getInstance().isSpiking = values[1] == "1";
-    });
+    handleCharacteristics(batteryStatusStream);
   }
 
   void subscribeCharacteristics(List<Service> services) {
@@ -76,4 +70,20 @@ class BlueToothHandler {
       }
     });
   }
+}
+
+void handleCharacteristics(Stream<List<int>> batteryStatusStream) {
+  print("handling characteristics");
+  batteryStatusStream.listen((event) {
+    print(event);
+    String converted = String.fromCharCodes(event);
+    List<String> values = converted.split(',');
+    print("values");
+    print(values);
+    DeviceDataSingleton.getInstance().batteryStatus = int.parse(values[0]);
+    print(DeviceDataSingleton.getInstance().isSpiking);
+    if (DeviceDataSingleton.getInstance().isSpiking) {
+          Vibration.vibrate(duration: 1000, amplitude: 255);
+        }
+      });
 }

@@ -1,5 +1,5 @@
 class DeviceDataSingleton {
-  static DeviceDataSingleton _instance = new DeviceDataSingleton();
+  static final DeviceDataSingleton _instance = DeviceDataSingleton();
   int batteryStatus = 100;
   bool isSpiking = false;
 
