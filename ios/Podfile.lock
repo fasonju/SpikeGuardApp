@@ -1,4 +1,6 @@
 PODS:
+  - device_info_plus (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - geolocator_apple (1.2.0):
     - Flutter
@@ -21,14 +23,18 @@ PODS:
     - Flutter
     - FlutterMacOS
   - SwiftProtobuf (1.25.2)
+  - vibration (1.7.5):
+    - Flutter
 
 DEPENDENCIES:
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - reactive_ble_mobile (from `.symlinks/plugins/reactive_ble_mobile/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - vibration (from `.symlinks/plugins/vibration/ios`)
 
 SPEC REPOS:
   trunk:
@@ -37,6 +43,8 @@ SPEC REPOS:
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
   Flutter:
     :path: Flutter
   geolocator_apple:
@@ -49,8 +57,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/reactive_ble_mobile/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  vibration:
+    :path: ".symlinks/plugins/vibration/ios"
 
 SPEC CHECKSUMS:
+  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   geolocator_apple: 9157311f654584b9bb72686c55fc02a97b73f461
   google_maps_flutter_ios: f135b968a67c05679e0a53538e900b5c174b0d99
@@ -60,6 +71,7 @@ SPEC CHECKSUMS:
   reactive_ble_mobile: 9ce6723d37ccf701dbffd202d487f23f5de03b4c
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   SwiftProtobuf: 407a385e97fd206c4fbe880cc84123989167e0d1
+  vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 

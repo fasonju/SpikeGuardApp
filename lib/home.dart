@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prototype_app/DeviceDataSingleton.dart';
 import 'package:prototype_app/DeviceSelector.dart';
 import 'package:prototype_app/heatmap_component/heatmap.dart';
 import 'package:prototype_app/information.dart';
@@ -71,7 +72,13 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(child: Center(child: DeviceStatus(guardHandler: BlueToothHandler())))
+          Expanded(child: Column(
+            children: [
+              Text("Battery ${DeviceDataSingleton.getInstance().batteryStatus}%"),
+              Text("Spiking ${DeviceDataSingleton.getInstance().isSpiking}"),
+              DeviceStatus(guardHandler: guardHandler),
+            ])
+          )
         ],
       ),
     );
