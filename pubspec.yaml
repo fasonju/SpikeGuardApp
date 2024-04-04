@@ -50,6 +50,7 @@ dependencies:
   permission_handler: ^11.3.0
   vibration: ^1.8.4
   flutter_isolate: ^2.0.5-pre
+  url_launcher: ^6.2.5
 
 
 dev_dependencies:
